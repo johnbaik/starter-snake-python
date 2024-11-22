@@ -82,8 +82,8 @@ def move(game_state: typing.Dict) -> typing.Dict:
     
     if game_state["you"]["health"] < dangerous_health_state:
         search_for_food = True
-     
-    # We've included code to prevent your Battlesnake from moving backwards
+
+
     my_head = game_state["you"]["body"][0]  # Coordinates of your head
     my_neck = game_state["you"]["body"][1]  # Coordinates of your "neck"
 
@@ -99,6 +99,15 @@ def move(game_state: typing.Dict) -> typing.Dict:
     elif my_neck["y"] > my_head["y"]:  # Neck is above head, don't move up
         is_move_safe["up"] = False
 
+
+    occupied_boxes = []
+    
+    occupied_boxes = occupied_boxes.concatenate(game_state["you"]["body"])
+    for snake in game_state["board"]["snakes"]:
+        occupied_boxes = occupied_boxes.concatenate(snake["body"])
+        
+    
+
     # TODO: Step 1 - Prevent your Battlesnake from moving out of bounds
     board_width = game_state['board']['width']
     board_height = game_state['board']['height']
@@ -108,6 +117,8 @@ def move(game_state: typing.Dict) -> typing.Dict:
 
     # TODO: Step 3 - Prevent your Battlesnake from colliding with other Battlesnakes
     opponents = game_state['board']['snakes']
+
+
 
     # Are there any safe moves left?
     safe_moves = []
@@ -119,24 +130,7 @@ def move(game_state: typing.Dict) -> typing.Dict:
         print(f"MOVE {game_state['turn']}: No safe moves detected! Moving down")
         return {"move": "down"}
 
-    if not search_for_food:
-        print(f"MOVE {game_state['turn']}: Not need to search for food yet")
-        if is_move_safe["left"] and previous_move != "left":
-            print(f"MOVE {game_state['turn']}: Turning left")
-            previous_move = "left"
-            return {"move": "left"}
-        if is_move_safe["down"] and previous_move != "down":
-            print(f"MOVE {game_state['turn']}: Turning down")
-            previous_move = "down"
-            return {"move": "down"}
-        if is_move_safe["right"] and previous_move != "right":
-            print(f"MOVE {game_state['turn']}: Turning right")
-            previous_move = "right"
-            return {"move": "right"}
-        if is_move_safe["up"] and previous_move != "up":
-            print(f"MOVE {game_state['turn']}: Turning up")
-            previous_move = "up"
-            return {"move": "up"}
+
     
     # Choose a random move from the safse ones
     next_move = random.choice(safe_moves)
@@ -148,6 +142,55 @@ def move(game_state: typing.Dict) -> typing.Dict:
 
     print(f"MOVE {game_state['turn']}: {next_move}")
     return {"move": next_move}
+
+
+def get_my_front_box(my_head, my_neck):
+    front = 0
+    if my_neck["x"] < my_head["x"]:  # Neck is left of head, don't move left
+        front = my_head
+        front["x"] = front["x"] + 1
+    elif my_neck["x"] > my_head["x"]:  # Neck is right of head, don't move right
+        front = my_head
+        front["x"] = front["x"] - 1
+    elif my_neck["y"] < my_head["y"]:  # Neck is below head, don't move down
+        front = my_head
+        front["y"] = front["y"] + 1
+    elif my_neck["y"] > my_head["y"]:  # Neck is above head, don't move up
+        front = my_head
+        front["y"] = front["y"] - 1
+    return front
+        
+def get_my_left_box(my_head, my_neck):
+    left = 0
+    if my_neck["x"] < my_head["x"]:  # Neck is left of head, don't move left
+        left = my_head
+        left["y"] = left["y"] + 1
+    elif my_neck["x"] > my_head["x"]:  # Neck is right of head, don't move right
+        left = my_head
+        left["y"] = left["y"] - 1
+    elif my_neck["y"] < my_head["y"]:  # Neck is below head, don't move down
+        left = my_head
+        left["x"] = left["x"] - 1
+    elif my_neck["y"] > my_head["y"]:  # Neck is above head, don't move up
+        left = my_head
+        left["x"] = left["x"] + 1
+    return left
+
+def get_my_right_box(my_head, my_neck):
+    right = 0
+    if my_neck["x"] < my_head["x"]:  # Neck is left of head, don't move left
+        right = my_head
+        right["y"] = right["y"] - 1
+    elif my_neck["x"] > my_head["x"]:  # Neck is right of head, don't move right
+        right = my_head
+        right["y"] = right["y"] + 1
+    elif my_neck["y"] < my_head["y"]:  # Neck is below head, don't move down
+        right = my_head
+        right["x"] = right["x"] + 1
+    elif my_neck["y"] > my_head["y"]:  # Neck is above head, don't move up
+        right = my_head
+        right["x"] = right["x"] - 1
+    return right
 
 
 # Start server when `python main.py` is run
