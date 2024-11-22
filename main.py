@@ -59,7 +59,7 @@ def info() -> typing.Dict:
 
 # start is called when your Battlesnake begins a game
 def start(game_state: typing.Dict):
-    print("GAME START1")
+    print("GAME START2")
 
 
 # end is called when your Battlesnake finishes a game
@@ -75,7 +75,7 @@ def move(game_state: typing.Dict) -> typing.Dict:
     # global round
     # print("round: ", round)
     # round = round + 1
-
+    return {"move": "left"}
     dangerous_health_state = 30
     search_for_food = False
     is_move_safe = {"up": True, "down": True, "left": True, "right": True}
