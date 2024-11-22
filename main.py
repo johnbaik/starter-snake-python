@@ -13,7 +13,8 @@
 import random
 import typing
 
-    
+round = 0
+
 def sortFoodByClosest(food, my_head):
     def sortFood(apple):
         xDiff = abs(apple["x"] - my_head["x"]);
@@ -70,6 +71,10 @@ def end(game_state: typing.Dict):
 # Valid moves are "up", "down", "left", or "right"
 # See https://docs.battlesnake.com/api/example-move for available data
 def move(game_state: typing.Dict) -> typing.Dict:
+    global round
+    print("round: ", round)
+    round = round + 1
+
     dangerous_health_state = 30
     search_for_food = False
     is_move_safe = {"up": True, "down": True, "left": True, "right": True}
