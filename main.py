@@ -114,17 +114,22 @@ def move(game_state: typing.Dict) -> typing.Dict:
         print(f"MOVE {game_state['turn']}: No safe moves detected! Moving down")
         return {"move": "down"}
 
-    while not search_for_food:
+    if not search_for_food:
+        print(f"MOVE {game_state['turn']}: Not need to search for food yet")
         if is_move_safe["left"]: 
+            print(f"MOVE {game_state['turn']}: Turning left")
             return {"move": "left"}
         if is_move_safe["down"]:
+            print(f"MOVE {game_state['turn']}: Turning down")
             return {"move": "down"}
         if is_move_safe["right"]:
+            print(f"MOVE {game_state['turn']}: Turning right")
             return {"move": "right"}
         if is_move_safe["up"]:  
+            print(f"MOVE {game_state['turn']}: Turning up")
             return {"move": "up"}
     
-    # Choose a random move from the safe ones
+    # Choose a random move from the safse ones
     next_move = random.choice(safe_moves)
 
     # TODO: Step 4 - Move towards food instead of random, to regain health and survive longer
