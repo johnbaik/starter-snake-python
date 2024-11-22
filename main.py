@@ -13,7 +13,7 @@
 import random
 import typing
 
-previous_move = ""
+previous_move = "up"
 
 def sortFoodByClosest(food, my_head):
     def sortFood(apple):
@@ -59,7 +59,7 @@ def info() -> typing.Dict:
 
 # start is called when your Battlesnake begins a game
 def start(game_state: typing.Dict):
-    print("GAME START")
+    print("GAME START2")
 
 
 # end is called when your Battlesnake finishes a game
@@ -75,7 +75,7 @@ def move(game_state: typing.Dict) -> typing.Dict:
     # global round
     # print("round: ", round)
     # round = round + 1
-
+    return {"move": "left"}
     dangerous_health_state = 30
     search_for_food = False
     is_move_safe = {"up": True, "down": True, "left": True, "right": True}
@@ -84,6 +84,10 @@ def move(game_state: typing.Dict) -> typing.Dict:
         search_for_food = True
 
 
+    # if game_state["you"]["health"] < dangerous_health_state:
+    #     search_for_food = True
+     
+    # We've included code to prevent your Battlesnake from moving backwards
     my_head = game_state["you"]["body"][0]  # Coordinates of your head
     my_neck = game_state["you"]["body"][1]  # Coordinates of your "neck"
 
@@ -131,6 +135,24 @@ def move(game_state: typing.Dict) -> typing.Dict:
         return {"move": "down"}
 
 
+    # if not search_for_food:
+    print(f"MOVE {game_state['turn']}: Not need to search for food yet")
+    if is_move_safe["left"] and previous_move == "up":
+        print(f"MOVE {game_state['turn']}: Turning left")
+        previous_move = "left"
+        return {"move": "left"}
+    if is_move_safe["down"] and previous_move == "left":
+        print(f"MOVE {game_state['turn']}: Turning down")
+        previous_move = "down"
+        return {"move": "down"}
+    if is_move_safe["right"] and previous_move == "down":
+        print(f"MOVE {game_state['turn']}: Turning right")
+        previous_move = "right"
+        return {"move": "right"}
+    if is_move_safe["up"] and previous_move != "right":
+        print(f"MOVE {game_state['turn']}: Turning up")
+        previous_move = "up"
+        return {"move": "up"}
     
     # Choose a random move from the safse ones
     next_move = random.choice(safe_moves)
