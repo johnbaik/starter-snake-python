@@ -67,17 +67,7 @@ def end(game_state: typing.Dict):
 
 # move is called on every turn and returns your next move
 # Valid moves are "up", "down", "left", or "right"
-# See https://docs.battlesnake.com/api/example-move for available data    # if my_neck["x"] < my_head["x"]:  # Neck is left of head, don't move left
-#     #     is_move_safe["left"] = False
-#     #
-#     # elif my_neck["x"] > my_head["x"]:  # Neck is right of head, don't move right
-#     #     is_move_safe["right"] = False
-#     #
-#     # elif my_neck["y"] < my_head["y"]:  # Neck is below head, don't move down
-#     #     is_move_safe["down"] = False
-#     #
-#     # elif my_neck["y"] > my_head["y"]:  # Neck is above head, don't move up
-#     #     is_move_safe["up"] = False
+# See https://docs.battlesnake.com/api/example-move for available data
 def move(game_state: typing.Dict) -> typing.Dict:
 
     is_move_safe = {"up": True, "down": True, "left": True, "right": True}
@@ -86,7 +76,17 @@ def move(game_state: typing.Dict) -> typing.Dict:
     my_head = game_state["you"]["body"][0]  # Coordinates of your head
     my_neck = game_state["you"]["body"][1]  # Coordinates of your "neck"
 
+    if my_neck["x"] < my_head["x"]:  # Neck is left of head, don't move left
+        is_move_safe["left"] = False
 
+    elif my_neck["x"] > my_head["x"]:  # Neck is right of head, don't move right
+        is_move_safe["right"] = False
+
+    elif my_neck["y"] < my_head["y"]:  # Neck is below head, don't move down
+        is_move_safe["down"] = False
+
+    elif my_neck["y"] > my_head["y"]:  # Neck is above head, don't move up
+        is_move_safe["up"] = False
 
     # TODO: Step 1 - Prevent your Battlesnake from moving out of bounds
     # board_width = game_state['board']['width']
