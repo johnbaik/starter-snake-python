@@ -36,7 +36,7 @@ def start(game_state: typing.Dict):
 
 # end is called when your Battlesnake finishes a game
 def end(game_state: typing.Dict):
-    print("GAME OVER\n")
+    print("GAME OVER2\n")
 
 
 # move is called on every turn and returns your next move
