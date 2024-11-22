@@ -57,3 +57,34 @@ battlesnake play -W 11 -H 11 --name 'Python Starter Project' --url http://localh
 Continue with the [Battlesnake Quickstart Guide](https://docs.battlesnake.com/quickstart) to customize and improve your Battlesnake's behavior.
 
 **Note:** To play games on [play.battlesnake.com](https://play.battlesnake.com) you'll need to deploy your Battlesnake to a live web server OR use a port forwarding tool like [ngrok](https://ngrok.com/) to access your server locally.
+
+
+## The vision
+x, y aksonas (check deksia aristera, panw katw)
+
+BASIC - AVOID (death):
+board,
+you,
+snakes
+
+
+Stratigikes
+to survive:
+- gurw apo ton eauto su mexri na pesei to health
+otan pesei kiniga faghto 
+ksanapigene sthn idia thesi
+
+Gia milo:
+apostash egw apo milo kai oi alloi , sto pio kontino kai an aksizei na paw (posa mila iparxune)
+
+
+Notes:
+pou einai ta mila - posa snakes einai konta - aksizei na paw se allo
+poso critical einai na paw sto milo
+se poia kateuthinsi eimai pio safe
+
+
+possible methods:
+- find food
+- find directions (pou eimai , pou mporw na paw)
+
