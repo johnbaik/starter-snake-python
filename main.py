@@ -13,6 +13,32 @@
 import random
 import typing
 
+def sortFoodByClosest(food, my_head):
+    def sortFood(apple):
+        xDiff = abs(apple["x"] - my_head["x"]);
+        yDiff = abs(apple["y"] - my_head["y"]);
+        return xDiff + yDiff
+    foodSortedList = sorted(food, key=sortFood)
+    return foodSortedList
+
+def findClosestFoodFurtherFromOthers(snakes, foodSortedList, my_head):
+    def callback(enemySnake):
+        xDiff = abs(foodItem["x"] - my_head["x"]);
+        yDiff = abs(foodItem["y"] - my_head["y"]);
+        distanceFromMySnakeHead = xDiff + yDiff
+        enemySnakeHead = enemySnake["body"][0]
+        xDiff = abs(foodItem["x"] - enemySnakeHead["x"]);
+        yDiff = abs(foodItem["y"] - enemySnakeHead["y"]);
+        distanceFromEnemySnakeHead = xDiff + yDiff
+        return distanceFromEnemySnakeHead >= distanceFromMySnakeHead
+
+    closestFoodFurtherFromOthers = 0
+    for foodItem in foodSortedList:
+        allEnemySnakesAreFurther = all( callback(enemySnake) for enemySnake in snakes)
+        if allEnemySnakesAreFurther:
+            closestFoodFurtherFromOthers = foodItem
+            break
+    return closestFoodFurtherFromOthers
 
 # info is called when you create your Battlesnake on play.battlesnake.com
 # and controls your Battlesnake's appearance
@@ -86,7 +112,9 @@ def move(game_state: typing.Dict) -> typing.Dict:
     next_move = random.choice(safe_moves)
 
     # TODO: Step 4 - Move towards food instead of random, to regain health and survive longer
-    # food = game_state['board']['food']
+    foodSortedList = sortFoodByClosest(game_state['board']['food'], my_head)
+    closestFoodFurtherFromOthers = findClosestFoodFurtherFromOthers(game_state["board"]["snakes"], foodSortedList, my_head)
+    print(closestFoodFurtherFromOthers)
 
     print(f"MOVE {game_state['turn']}: {next_move}")
     return {"move": next_move}
