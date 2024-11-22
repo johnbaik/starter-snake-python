@@ -13,8 +13,6 @@
 import random
 import typing
 
-dangerous_health_state = 30
-search_for_food = False 
     
 def sortFoodByClosest(food, my_head):
     def sortFood(apple):
@@ -72,11 +70,12 @@ def end(game_state: typing.Dict):
 # Valid moves are "up", "down", "left", or "right"
 # See https://docs.battlesnake.com/api/example-move for available data
 def move(game_state: typing.Dict) -> typing.Dict:
-
+    dangerous_health_state = 30
+    search_for_food = False
     is_move_safe = {"up": True, "down": True, "left": True, "right": True}
     
-    if game_state["you"]["health"] < dangerous_health_state:
-     search_for_food = True
+    if game_state["you"]["health"] > dangerous_health_state:
+        search_for_food = True
      
     # We've included code to prevent your Battlesnake from moving backwards
     my_head = game_state["you"]["body"][0]  # Coordinates of your head
