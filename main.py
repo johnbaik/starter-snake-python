@@ -80,7 +80,7 @@ def move(game_state: typing.Dict) -> typing.Dict:
     search_for_food = False
     is_move_safe = {"up": True, "down": True, "left": True, "right": True}
     
-    if game_state["you"]["health"] > dangerous_health_state:
+    if game_state["you"]["health"] < dangerous_health_state:
         search_for_food = True
      
     # We've included code to prevent your Battlesnake from moving backwards
